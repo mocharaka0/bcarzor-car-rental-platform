@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: bcarzor_postgres
+    environment:
+      POSTGRES_DB: bcarzor_db
+      POSTGRES_USER: bcarzor_user
+      POSTGRES_PASSWORD: bcarzor_password
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    networks:
+      - bcarzor_network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: bcarzor_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - bcarzor_network
+
+  # Laravel Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bcarzor_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www/html
+      - backend_vendor:/var/www/html/vendor
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: bcarzor_db
+      DB_USERNAME: bcarzor_user
+      DB_PASSWORD: bcarzor_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    networks:
+      - bcarzor_network
+
+  # Next.js Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bcarzor_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api
+    networks:
+      - bcarzor_network
+
+volumes:
+  postgres_data:
+  redis_data:
+  backend_vendor:
+  frontend_node_modules:
+
+networks:
+  bcarzor_network:
+    driver: bridge
