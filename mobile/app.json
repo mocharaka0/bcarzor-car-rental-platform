@@ -1,0 +1,139 @@
+{
+  "expo": {
+    "name": "Car Rental Driver",
+    "slug": "car-rental-driver",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1e40af"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.carrentalplatform.driver",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app needs location access to track your trips and provide navigation.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app needs location access to track your trips and provide navigation even when the app is in the background.",
+        "NSLocationAlwaysUsageDescription": "This app needs location access to track your trips and provide navigation even when the app is in the background.",
+        "NSCameraUsageDescription": "This app needs camera access to take photos for trip documentation and verification.",
+        "NSPhotoLibraryUsageDescription": "This app needs photo library access to select images for profile and trip documentation.",
+        "NSMicrophoneUsageDescription": "This app needs microphone access for voice notes and emergency communications.",
+        "NSContactsUsageDescription": "This app needs contacts access to quickly call emergency contacts if needed.",
+        "NSFaceIDUsageDescription": "Use Face ID to authenticate and secure your account.",
+        "UIBackgroundModes": [
+          "location",
+          "background-fetch",
+          "background-processing"
+        ]
+      },
+      "config": {
+        "googleMapsApiKey": "YOUR_GOOGLE_MAPS_IOS_API_KEY"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1e40af"
+      },
+      "package": "com.carrentalplatform.driver",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE",
+        "RECORD_AUDIO",
+        "VIBRATE",
+        "RECEIVE_BOOT_COMPLETED",
+        "WAKE_LOCK",
+        "USE_FINGERPRINT",
+        "USE_BIOMETRIC"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "YOUR_GOOGLE_MAPS_ANDROID_API_KEY"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-location",
+      "expo-notifications",
+      "expo-camera",
+      "expo-image-picker",
+      "expo-media-library",
+      "expo-secure-store",
+      "expo-sqlite",
+      "expo-background-fetch",
+      "expo-task-manager",
+      [
+        "@react-native-firebase/app",
+        {
+          "ios": {
+            "googleServicesFile": "./firebase/GoogleService-Info.plist"
+          },
+          "android": {
+            "googleServicesFile": "./firebase/google-services.json"
+          }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#1e40af",
+          "sounds": [
+            "./assets/sounds/notification.wav",
+            "./assets/sounds/trip-alert.wav"
+          ]
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "This app needs location access to track your trips and provide navigation even when the app is in the background.",
+          "locationAlwaysPermission": "This app needs location access to track your trips and provide navigation even when the app is in the background.",
+          "locationWhenInUsePermission": "This app needs location access to track your trips and provide navigation.",
+          "isIosBackgroundLocationEnabled": true,
+          "isAndroidBackgroundLocationEnabled": true
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "This app needs camera access to take photos for trip documentation and verification."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "your-eas-project-id"
+      },
+      "apiUrl": "http://localhost:8000/api/v1",
+      "webUrl": "http://localhost:3000",
+      "googleMapsApiKey": "YOUR_GOOGLE_MAPS_API_KEY",
+      "oneSignalAppId": "YOUR_ONESIGNAL_APP_ID"
+    },
+    "owner": "car-rental-platform",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/your-eas-project-id"
+    },
+    "scheme": "car-rental-driver",
+    "privacy": "unlisted"
+  }
+}
